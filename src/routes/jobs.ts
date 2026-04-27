@@ -110,7 +110,7 @@ export const createJobsRouter = (jobSystem: BackgroundJobSystem, options: JobsRo
   })
 
   // POST /enqueue — manually trigger a background job (admin only, strict rate limit)
-  jobsRouter.post('/enqueue', enqueueLimiter, requireJson, (req, res) => {
+  jobsRouter.post('/enqueue', requireJson, enqueueLimiter, async (req, res) => {
     if (!isRecord(req.body)) {
       res.status(400).json({ error: 'Body must be a JSON object' })
       return
